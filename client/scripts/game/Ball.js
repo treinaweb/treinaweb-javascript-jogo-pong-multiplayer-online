@@ -3,7 +3,7 @@ import { GameObject } from '../game-engine/gameObject.js';
 export class Ball extends GameObject{
     constructor(){
         super();
-        this.speed = 5;
+        this.speed = 0;
         this.size = 10;
         this.width = this.height = this.size;
         this.resetPosition();

@@ -1,9 +1,11 @@
 import {Game} from './scripts/game-engine/game.js';
 import {Paddle} from './scripts/game/Paddle.js';
-import {PaddleAI} from './scripts/game/PaddleAI.js';
 import {Ball} from './scripts/game/Ball.js';
 import {Score} from './scripts/game/Score.js';
+import {Connection} from './scripts/game/Connection.js';
 
+
+const socket  = io('http://localhost:3000');
 const p2Button = document.querySelector('#player2');
 const buttonsList = document.querySelector('.buttons-list');
 
@@ -30,18 +32,16 @@ function startGame(players){
     const paddle = new Paddle();
     const paddle2 = new Paddle('right');
     const ball = new Ball();
-    const paddleAI = new PaddleAI(ball);
+    const connection = new Connection();
 
     Game.addObject(score);
     Game.addObject(paddle);
-    //Game.addObject(paddle2);
-    //Game.addObject(paddleAI);
+    Game.addObject(paddle2);
     Game.addObject(ball);
+    Game.addObject(connection);
 
-    if(players === 1){
-        Game.addObject(paddleAI);
-    }else{
-        Game.addObject(paddle2);
+    connection.update = function(){
+
     }
 
 
@@ -79,5 +79,7 @@ function startGame(players){
         this.game.stop();
         alert(`Winner: ${winner}`);
     }
+
+    socket.emit('startGame');
 
 }
