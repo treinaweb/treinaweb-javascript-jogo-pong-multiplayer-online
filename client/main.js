@@ -48,7 +48,19 @@ function startGame(players){
         if(this.input.onKey(this.input.key.DOWN)){
             socket.emit('player', 'down')
         }
+
+        socket.emit('ball', {x: ball.x, y: ball.y});
     }
+
+    socket.on('ball', (position)=>{
+        ball.x = position.x;
+        ball.y = position.y;
+    })
+
+    socket.on('start', () => {
+        ball.speed = 5;
+        ball.resetPosition(); 
+    })
 
     socket.on('p1', (direction) => {
         if(direction === 'up'){
