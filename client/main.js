@@ -80,14 +80,21 @@ function startGame(players){
         }
     })
 
+    socket.on('score', (playersScore) => {
+        score.p1Score = playersScore.p1;
+        score.p2Score = playersScore.p2;
+        ball.resetPosition();
+        setTimeout(() => {
+            score.checkGameOver();
+        }, 50);
+    })
+
     ball.onLeftOut = function(){
-        score.p2Point();
-        this.resetPosition();
+        socket.emit('ballOut', 'left');
     }
 
     ball.onRightOut = function(){
-        score.p1Point();
-        this.resetPosition();
+        socket.emit('ballOut', 'right');
     }
 
     score.onGameOver = function(winner){
