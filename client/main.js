@@ -41,29 +41,32 @@ function startGame(players){
     Game.addObject(connection);
 
     connection.update = function(){
-
-    }
-
-
-    paddle.update = function(){
-        if(this.input.onKey(this.input.key.W)){
-            this.goUp();
-        }
-
-        if(this.input.onKey(this.input.key.S)){
-            this.goDown();
-        }
-    }
-
-    paddle2.update = function(){
         if(this.input.onKey(this.input.key.UP)){
-            this.goUp();
+            socket.emit('player', 'up')
         }
 
         if(this.input.onKey(this.input.key.DOWN)){
-            this.goDown();
+            socket.emit('player', 'down')
         }
     }
+
+    socket.on('p1', (direction) => {
+        if(direction === 'up'){
+            paddle.goUp();
+        }
+        if(direction === 'down'){
+            paddle.goDown();
+        }
+    })
+
+    socket.on('p2', (direction) => {
+        if(direction === 'up'){
+            paddle2.goUp();
+        }
+        if(direction === 'down'){
+            paddle2.goDown();
+        }
+    })
 
     ball.onLeftOut = function(){
         score.p2Point();

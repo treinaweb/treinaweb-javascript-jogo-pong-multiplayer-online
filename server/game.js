@@ -4,6 +4,7 @@ const users = [];
 const PongServer = {
     connect(socket){
         socket.on('startGame', () => this.enterRoom(socket));
+        socket.on('player', (direction) => this.handlePlayer(socket, direction));
     },
     disconnect(socket){
         const userIndex = users.findIndex(user => user.id === socket.id);
@@ -22,6 +23,12 @@ const PongServer = {
         if(users.length === 2){
             users.forEach(user => user.emit('start') );
         }
+    },
+
+    handlePlayer(socket, direction){
+        users.forEach(user => {
+            user.emit(`p${socket._p1 ? '1':'2'}`, direction);
+        })
     }
 }
 
