@@ -4,13 +4,9 @@ import {PaddleAI} from './scripts/game/PaddleAI.js';
 import {Ball} from './scripts/game/Ball.js';
 import {Score} from './scripts/game/Score.js';
 
-
-const p1Button = document.querySelector('#player1');
 const p2Button = document.querySelector('#player2');
 const buttonsList = document.querySelector('.buttons-list');
 
-
-p1Button.addEventListener('click', () => startGame(1));
 p2Button.addEventListener('click', () => startGame(2));
 
 
